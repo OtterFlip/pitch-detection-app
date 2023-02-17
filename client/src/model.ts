@@ -46,7 +46,7 @@ export const store = createStore<StoreModel>({
   // Default values
   windowSize: 1024,
   detectorName: 'mcleod',
-  displayType: 'chart',
+  displayType: 'circle',
   clarityThreshold: 0.5,
   enabled: false,
   loading: false,

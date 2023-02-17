@@ -36,4 +36,10 @@ npm run build
 cd ../client
 npm install
 npm run start
+
+# In the display and client dirs if you run into issues with npm try yarn instead
+# and be aware you need node version 16 so nvm may be useful:
+nvm use 16
+yarn install
+yarn run start
 ```

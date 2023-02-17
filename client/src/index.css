@@ -132,13 +132,21 @@ select {
   margin: 0;
 }
 
+.freq-target,
 .freq-note,
 .freq-hz {
   display: block;
 }
+
+.freq-target {
+  font-size: 34px;
+}
+
+
 .freq-note {
   font-size: 24px;
 }
+
 .freq-container {
   display: flex;
   flex-direction: column;

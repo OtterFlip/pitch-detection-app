@@ -131,6 +131,9 @@ function drawCircleChartArrow(
   ctx.stroke();
 }
 
+let g_targetNote = 'C';
+let g_targetNoteDisplayVal = 'C';
+
 function Frequency({
   hz,
   noteFormat,
@@ -141,10 +144,28 @@ function Frequency({
   const noteSymbols =
     noteFormat === 'sharp' ? NOTE_SYMBOLS_SHARP : NOTE_SYMBOLS_FLAT;
   const { note, octave } = freqToNote(hz);
+
+  // If the current note matches the target note then get the next target note
+  if (note === g_targetNote) {
+    const targetNotes: Note[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+    const randomIndex = Math.floor(Math.random() * targetNotes.length);
+    g_targetNote = targetNotes[randomIndex];
+
+    // When displaying the target note, randomly switch off between
+    // displaying notes with sharps or displaying them with flats
+    if ( Math.floor(Math.random() * 2) ) // expression will be 0 or 1
+      g_targetNoteDisplayVal = NOTE_SYMBOLS_SHARP[g_targetNote];
+    else
+      g_targetNoteDisplayVal = NOTE_SYMBOLS_FLAT[g_targetNote];
+  }
+
   return (
     <div className="freq-container">
+      <span className="freq-target">Play {g_targetNoteDisplayVal}</span>
       <span className="freq-note">
-        {noteSymbols[note]}
+        {(noteSymbols[note].length === 2) ? 
+          NOTE_SYMBOLS_SHARP[note] + " / " + NOTE_SYMBOLS_FLAT[note] :
+          NOTE_SYMBOLS_SHARP[note]}
         <span className="freq-octave">{octave}</span>
       </span>
       <span className="freq-hz">{Math.round(hz)} Hz</span>
