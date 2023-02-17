@@ -2,7 +2,7 @@
 An open source pitch detection app that uses Rust and WebAssembly
 
 ## Live Demo
-[![Demo Page](./demo.png)](https://alesgenova.github.io/pitch-detection-app/)
+[![Demo Page](./demo.png)](https://otterflip.com/pitch-detection-app/)
 
 ## Components
 ### Core Pitch Detection Library
