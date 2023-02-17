@@ -131,8 +131,22 @@ function drawCircleChartArrow(
   ctx.stroke();
 }
 
+function UpdateTargetNote() {
+  const targetNotes: Note[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+  const randomIndex = Math.floor(Math.random() * targetNotes.length);
+  g_targetNote = targetNotes[randomIndex];
+
+  // When displaying the target note, randomly switch off between
+  // displaying notes with sharps or displaying them with flats
+  if ( Math.floor(Math.random() * 2) ) // expression will be 0 or 1
+    g_targetNoteDisplayVal = NOTE_SYMBOLS_SHARP[g_targetNote];
+  else
+    g_targetNoteDisplayVal = NOTE_SYMBOLS_FLAT[g_targetNote];
+}
+
 let g_targetNote = 'C';
 let g_targetNoteDisplayVal = 'C';
+UpdateTargetNote();
 
 function Frequency({
   hz,
@@ -146,29 +160,19 @@ function Frequency({
   const { note, octave } = freqToNote(hz);
 
   // If the current note matches the target note then get the next target note
-  if (note === g_targetNote) {
-    const targetNotes: Note[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
-    const randomIndex = Math.floor(Math.random() * targetNotes.length);
-    g_targetNote = targetNotes[randomIndex];
-
-    // When displaying the target note, randomly switch off between
-    // displaying notes with sharps or displaying them with flats
-    if ( Math.floor(Math.random() * 2) ) // expression will be 0 or 1
-      g_targetNoteDisplayVal = NOTE_SYMBOLS_SHARP[g_targetNote];
-    else
-      g_targetNoteDisplayVal = NOTE_SYMBOLS_FLAT[g_targetNote];
-  }
+  if (note === g_targetNote)
+    UpdateTargetNote();
 
   return (
-    <div className="freq-container">
-      <span className="freq-target">Play {g_targetNoteDisplayVal}</span>
+    <div>
       <span className="freq-note">
         {(noteSymbols[note].length === 2) ? 
           NOTE_SYMBOLS_SHARP[note] + " / " + NOTE_SYMBOLS_FLAT[note] :
           NOTE_SYMBOLS_SHARP[note]}
-        <span className="freq-octave">{octave}</span>
+        {/* <span className="freq-octave">{octave}</span> */}
       </span>
       <span className="freq-hz">{Math.round(hz)} Hz</span>
+      <span className="freq-hz">Octave: {octave}</span>
     </div>
   );
 }
@@ -298,7 +302,10 @@ export function CircleChart({
   return (
     <div ref={surroundingDivRef} className="freq-surround">
       <CircleChartBackground w={w} h={h} noteFormat="sharp" />
-      {freq && <Frequency hz={freq || 440} noteFormat="sharp" />}
+      <div className="freq-container">
+        <span className="freq-target">Play {g_targetNoteDisplayVal}</span>
+        {freq && <Frequency hz={freq || 440} noteFormat="sharp" />}
+      </div>
       <canvas
         className="freq-pointer"
         width={w}

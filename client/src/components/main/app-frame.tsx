@@ -47,7 +47,7 @@ export function AppFrame({ children }: { children: React.ReactNode }) {
   return (
     <React.Fragment>
       <Navbar bg="primary" variant="dark">
-        <Navbar.Brand>Pitch Detector</Navbar.Brand>
+        <Navbar.Brand>Pitch Detector and Trainer</Navbar.Brand>
       </Navbar>
       <div className="main-container">
         <SideNav expanded={menuExpanded} onToggle={setMenuExpanded}>
